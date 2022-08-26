@@ -82,14 +82,18 @@
 ### 로그인 / 회원가입
 * JWT 토큰 방식으로 구현
 * JWT refresh token을 구현하여 로그인 상태 유지하게 끔 설정
-* 유저 아이디를 고유값으로 지정하여 중복 방지
+* USERNAME_FIELD를 사용하여 유저 아이디를 고유값으로 지정하여 중복 방지
 
 ### 메인 페이지
-* 로그인 유무에 따라 추천 커뮤니티 변경 [⚓](https://github.com/Reinforcement-succeeded/damoa_backend/blob/d53326057129b158fa05701c2d9765951b0c08f3/community/views.py#L23)
-    * 추천 커뮤니티는 무조건 공개 커뮤니티에 대해서만 제공
-* 커뮤니티 별 하루 접속자 수 순위표 제공 [⚓](https://github.com/Reinforcement-succeeded/damoa_backend/blob/d53326057129b158fa05701c2d9765951b0c08f3/community/views.py#L24)
-* 가입되지 않은 커뮤니티에 가입 요청 / 요청 취소 가능 [⚓](https://github.com/Reinforcement-succeeded/damoa_backend/blob/d53326057129b158fa05701c2d9765951b0c08f3/community/views.py#L180)
-* 커뮤니티 생성 [⚓](https://github.com/Reinforcement-succeeded/damoa_backend/blob/d53326057129b158fa05701c2d9765951b0c08f3/community/views.py#L124)
+* 로그인 유무에 따라 추천 커뮤니티 변경
+    * prefetch_related, Q 사용을 통한 로그인 된 사용자의 가입되지 않은 커뮤니티 목록 리턴 기능 작성
+    * Table Community Field is_public을 filtering 하여 공개 커뮤니티 리스트를 리턴 받는 기능 작성
+* 커뮤니티 별 하루 접속자 수 순위표 제공
+    * Table Community Field count를 기준으로 정렬하는 리턴 기능 작성
+    * X-Forwarded-For를 받아 ip 주소를 확인하여 Field count를 증가시키는 기능 작성
+* 가입되지 않은 커뮤니티에 가입 요청 / 요청 취소 가능
+    * 
+* 커뮤니티 생성
     * 커뮤니티 생성자는 관리자로 자동 설정
 
 ### 마이 페이지
