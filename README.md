@@ -129,7 +129,7 @@
     * 해결 : transaction을 사용하여 모든 serializer가 동시에 저장되게끔 설정
 
 ## 🏚 Architecture
-![image](https://user-images.githubusercontent.com/90381057/186589235-d27760f4-2d18-4642-90be-950eca5e2a92.png)
+![186589235-d27760f4-2d18-4642-90be-950eca5e2a92](https://user-images.githubusercontent.com/90381057/186792240-d9ec22b6-849c-4743-a5fd-8e01c93194a5.png)
 
 
 ## ⚙ [ERD](https://www.erdcloud.com/d/EL9ztjydoLhqhysPe)
