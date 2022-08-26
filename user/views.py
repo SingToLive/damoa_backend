@@ -21,16 +21,14 @@ class UserView(APIView):
     def put(self, request):
         permission_classes = (IsAuthenticated,)
         user = CustomUserModel.objects.get(user_id = request.user.user_id)
-        if request.data['password'] == user.password:
-            return Response(status=400)
-        data = {"user_id":request.user.user_id, "username":request.user.username, "password":request.data["password"]}
+        if not user.check_password(request.data['password_current']):
+            return Response({"message":"password doesn't match"}, status=400)
+        data = {"user_id":request.user.user_id, "username":request.user.username, "password":request.data["password_change"]}
         user_serializer = CustomUserSerializer(user, data=data)
         if user_serializer.is_valid():
             user_serializer.save()
-            return Response(status=200)
-        else:
-            print(user_serializer.errors)
-        return Response(status=400)
+            return Response({"message":"password changed"}, status=200)
+        return Response({"message":"password for change is not valid"}, status=400)
     
 class JwtTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomUserTokenObtainPairSerializer
