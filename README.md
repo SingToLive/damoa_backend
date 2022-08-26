@@ -82,28 +82,38 @@
 ### 로그인 / 회원가입
 * JWT 토큰 방식으로 구현
 * JWT refresh token을 구현하여 로그인 상태 유지하게 끔 설정
-* USERNAME_FIELD를 사용하여 유저 아이디를 고유값으로 지정하여 중복 방지
+* USERNAME_FIELD를 사용하여 유저 아이디를 고유값으로 지정하여 중복 방지 기능 구현
 
 ### 메인 페이지
 * 로그인 유무에 따라 추천 커뮤니티 변경
-    * prefetch_related, Q 사용을 통한 로그인 된 사용자의 가입되지 않은 커뮤니티 목록 리턴 기능 작성
-    * Table Community Field is_public을 filtering 하여 공개 커뮤니티 리스트를 리턴 받는 기능 작성
+    * prefetch_related, Q 사용을 통한 로그인 된 사용자의 가입되지 않은 커뮤니티 목록 리턴 기능 구현
+    * Table Community Field is_public을 filtering 하여 공개 커뮤니티 리스트를 리턴 받는 기능 구현
 * 커뮤니티 별 하루 접속자 수 순위표 제공
-    * Table Community Field count를 기준으로 정렬하는 리턴 기능 작성
-    * X-Forwarded-For를 받아 ip 주소를 확인하여 Field count를 증가시키는 기능 작성
+    * order_by를 통한 Table Community Field count를 기준으로 정렬된 리스트를 리턴 기능 구현
+    * X-Forwarded-For를 받아 ip 주소를 확인하여 Field count를 증가시키는 기능 구현
 * 가입되지 않은 커뮤니티에 가입 요청 / 요청 취소 가능
-    * 
+    * is_valid, save를 통해 community, user 객체가 있으면 invitation 객체를 저장하는 기능 구현
+    * delete를 통해 community, user 객체가 있으면 invitation 객체를 삭제하는 기능 구현
 * 커뮤니티 생성
     * 커뮤니티 생성자는 관리자로 자동 설정
+    * transaction.atomic을 사용하여 CommunityModel, TagAndCommunityModel, UserAndCommunityModel을 동시에 저장하는 기능 구현
 
 ### 마이 페이지
 * 비밀번호 변경 가능
+    * check_password를 통해 실제 비밀번호가 맞는지 확인 후 serializer validate로 검증 후 비밀번호 변경하는 기능 구현
 * 가입된 커뮤니티 관리
-* 작성한 글 관리(이동은 미구현)
-* 작성한 댓글 관리(이동은 미구현)
+    * delete를 통해 id값에 맞는 community 객체가 있으면 삭제하는 기능 구현
+* 작성한 글 삭제
+    * delete를 통해 id값에 맞는 article 객체가 있으면 삭제하는 기능 구현 
+* 작성한 댓글 삭제
+    * delete를 통해 id값에 맞는 comment 객체가 있으면 삭제하는 기능 구현
 * 유저->커뮤니티 가입 요청 결과 조회 / 요청 철회 / 요청 삭제
+    * is_valid, save를 통해 invitation 객체를 생성, 수정하는 기능 구현
+    * delete를 통해 id값에 맞는 invitation 객체가 있으면 삭제하는 기능 구현
 * 커뮤니티->유저 가입 요청 승락 / 요청 거절
-
+    * is_valid, save를 통해 invitation 객체를 생성, 수정하는 기능 구현
+    * delete를 통해 id값에 맞는 invitation 객체가 있으면 삭제하는 기능 구현
+    
 ### 커뮤니티 페이지
 * 게시판 생성
    * 생성자는 게시판 관리자도 자동 설정
