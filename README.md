@@ -133,7 +133,7 @@
 
 
 ## ⚙ [ERD](https://www.erdcloud.com/d/EL9ztjydoLhqhysPe)
-![image](https://user-images.githubusercontent.com/90381057/186103025-070baeb8-083d-4394-9153-207b4751c940.png)
+![186103025-070baeb8-083d-4394-9153-207b4751c940](https://user-images.githubusercontent.com/90381057/186792091-80933248-481a-402a-9622-14f12739912b.png)
 
 ## 🚀 **API 설계**
 [article](https://documenter.getpostman.com/view/16204656/VUquLFrn#intro)  
