@@ -21,9 +21,7 @@
 
 ### 소개 영상  [youtube](https://youtu.be/6c7Q82DfTAU)
 
-### Github  [Front-end](https://github.com/Reinforcement-succeeded/damoa_frontend)
-
-### Github  [Back-end](https://github.com/Reinforcement-succeeded/damoa_backend)
+### Github  [Front-end](https://github.com/SingToLive/damoa_frontend)
 
 ## 🧑 팀 구성 
 * 4인 팀 프로젝트  <br>
@@ -79,21 +77,19 @@
 ## 📖 Stack & Library Version
 <img src="https://img.shields.io/badge/python-3.9.12-brightgreen"> <img src="https://img.shields.io/badge/django-4.0.6-brightgreen"> <img src="https://img.shields.io/badge/django_rest_framework-3.13.1-brightgreen"> <img src="https://img.shields.io/badge/django_rest_framework_simple_jwt-5.2.0-brightgreen"> <img src="https://img.shields.io/badge/django_cors_header-3.13.0-brightgreen"> <img src="https://img.shields.io/badge/mysql_client-2.1.1-brightgreen"> <img src="https://img.shields.io/badge/tensorflow-2.9.1-brightgreen"> <img src="https://img.shields.io/badge/konlpy-0.6.0-brightgreen"> <img src="https://img.shields.io/badge/boto3-1.24.40-brightgreen"> <img src="https://img.shields.io/badge/PyJWT-2.4.0-brightgreen"> <img src="https://img.shields.io/badge/urllib3-1.26.11-brightgreen"> <img src="https://img.shields.io/badge/requests-2.28.1-brightgreen">
 </br>
+
 ## 🕹 주요 기능
 ### 로그인 / 회원가입
 * JWT 토큰 방식으로 구현
-* Local Storage에 저장
-* 각 페이지마다 접속시 refresh token을 받게 설정
-* 아이디를 고유값으로 지정하여 중복 방지
+* JWT refresh token을 구현하여 로그인 상태 유지하게 끔 설정
+* 유저 아이디를 고유값으로 지정하여 중복 방지
 
 ### 메인 페이지
-* 로그인 유무에 따라 추천 커뮤니티 변경
+* 로그인 유무에 따라 추천 커뮤니티 변경 [⚓](https://github.com/Reinforcement-succeeded/damoa_backend/blob/d53326057129b158fa05701c2d9765951b0c08f3/community/views.py#L23)
     * 추천 커뮤니티는 무조건 공개 커뮤니티에 대해서만 제공
-* 커뮤니티 별 하루 접속자 수 순위표 제공
-* 가입되지 않은 커뮤니티에 가입 요청 / 요청 취소 가능
-* 커뮤니티 카드를 누를시 해당 커뮤니티로 이동
-    * 단 가입되지 않은 커뮤니티는 접속 불가능
-* 커뮤니티 생성
+* 커뮤니티 별 하루 접속자 수 순위표 제공 [⚓](https://github.com/Reinforcement-succeeded/damoa_backend/blob/d53326057129b158fa05701c2d9765951b0c08f3/community/views.py#L24)
+* 가입되지 않은 커뮤니티에 가입 요청 / 요청 취소 가능 [⚓](https://github.com/Reinforcement-succeeded/damoa_backend/blob/d53326057129b158fa05701c2d9765951b0c08f3/community/views.py#L180)
+* 커뮤니티 생성 [⚓](https://github.com/Reinforcement-succeeded/damoa_backend/blob/d53326057129b158fa05701c2d9765951b0c08f3/community/views.py#L124)
     * 커뮤니티 생성자는 관리자로 자동 설정
 
 ### 마이 페이지
@@ -108,15 +104,11 @@
 * 게시판 생성
    * 생성자는 게시판 관리자도 자동 설정
 * 게시글 작성
-   * Quill Library로 게시글 작성 기능 구현
-   * 게시글에서 이미지 업로드 가능
-   * 파일 업로드 가능
+   * 이미지, 파일 업로드 가능
    * 게시글 제목, 내용중 하나라도 누락이 있을시 작성 불가능
 * 게시글 수정
    * 게시글 제목, 내용중 하나라도 누락이 있을시 작성 불가능
 * 댓글 작성
-   * 생성시 날짜, 아이디 노출
-   * 시간순으로 배치
    * 내용이 없으면 작성 불가능
 
 ## 😣 TroubleShooting
