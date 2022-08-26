@@ -67,13 +67,15 @@ class MainLoginedRecommendationCommunity(APIView):
     def get(self, request):
         user = request.user
         data = {}
+        # CommunityModel.objects.prefetch_related('userandcommunity_set').filter(~Q(user=user.id), is_public=True)
+        # prefetch는 옆에 테이블을 join하는 것이다.
         public_community = CommunityModel.objects.filter(is_public=True)
-        a = public_community.prefetch_related(Prefetch(
-            'userandcommunity_set',
-            queryset=UserAndCommunityModel.objects.filter(~Q(user=user.id)),
-            to_attr = 'user'
-            ),
-            )
+        # a = public_community.prefetch_related(Prefetch(
+        #     'userandcommunity_set',
+        #     queryset=UserAndCommunityModel.objects.filter(~Q(user=user.id)),
+        #     to_attr = 'user'
+        #     ),
+        #     )
         serializer = CommunitySerializer(public_community, many=True)
         data["community"] = []
         data["tag"] = []
@@ -153,7 +155,7 @@ class MainCreateCommunity(APIView):
     @transaction.atomic
     def post(self, request):
         if not request.data["name"]:
-            return Response({"message": "name_none"})
+            return Response({"message": "name_none"}, status=400)
         if CommunityModel.objects.filter(name=request.data["name"]):
             return Response({"message": "name_exist"}, status=400)
         if not request.data["introduction"]:
@@ -180,15 +182,17 @@ class MainCreateCommunity(APIView):
 class InvitationRequest(APIView):
     def post(self, request):
         data = {}
-        community = CommunityModel.objects.get(name=request.data['request_name'])
-        user = CustomUserModel.objects.get(user_id=request.user.user_id)
+        try:
+            community = CommunityModel.objects.get(name=request.data['request_name'])
+            user = CustomUserModel.objects.get(user_id=request.user.user_id)
+        except:
+            return Response({"message":"request data is wrong, please check"}, status=400)
         data['user'] = user.id
         data['community'] = community.id
         invitation_serializers = UserAndCommunityInvitationSerializer(data=data)
         if invitation_serializers.is_valid():
             invitation_serializers.save()
             return Response(status=200)
-        return Response(status=400)
     
     
     def put(self, request):
@@ -218,15 +222,17 @@ class InvitationRequest(APIView):
         except:
             user_id = request.user.id
             community_id = CommunityModel.objects.get(name=request.data['request_name']).id
-            UserAndCommunityInvitationModel.objects.filter(user=user_id, community=community_id).delete()
-            return Response(status=200)
-        else:
-            return Response(status=400)
+            invitation_object = UserAndCommunityInvitationModel.objects.filter(user=user_id, community=community_id)
+            if invitation_object:
+                invitation_object.delete()
+                return Response({"message":"data deleted successfuly"}, status=200)
+            return Response({"message":"community model data doesn't exist"}, status=400)
                 
 class Mypage(APIView):
     def delete(self, request):
-        try:
-            UserAndCommunityModel.objects.filter(id=request.data['request_id']).delete()
-            return Response(status=200)
-        except:
-            return Response(status=400)
+        delete_object = UserAndCommunityModel.objects.filter(id=request.data['request_id'])
+        if not delete_object:
+            return Response({"message":"community data doesn't exist"}, status=400)
+        UserAndCommunityModel.objects.filter(id=request.data['request_id']).delete()
+        return Response({"message":"community withdraw success"}, status=200)
+            
