@@ -1,6 +1,7 @@
 from article import serializers
 from community.models import Community as CommunityModel
 from community.models import IpAndCommunity as IpAndCommunityModel
+import noticeboard
 from .models import Noticeboard
 from article.models import Article
 from .serializers import NoticeboardSerializer
@@ -14,12 +15,15 @@ from django.http import Http404
 
 
 class NoticeboardList(APIView):
-    def get(self, request):
-        noticeboards = Noticeboard.objects.all()
-        serializer = NoticeboardSerializer(noticeboards, many=True)
-        return Response(serializer.data)
+    # def get(self, request):
+    #     noticeboards = Noticeboard.objects.all()
+    #     serializer = NoticeboardSerializer(noticeboards, many=True)
+    #     return Response(serializer.data)
 
     def post(self, request):
+        noticeboard_object = Noticeboard.objects.filter(community=request.data['community'], name=request.data['name'])
+        if noticeboard_object:
+            return Response({"message":"this noticeboard already exist in this community"}, status=400)
         serializer = NoticeboardSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -38,6 +42,8 @@ class NoticeboardDetail(APIView):
     
     def get(self, request, pk):
         noticeboard = Noticeboard.objects.filter(community=pk)
+        if not noticeboard:
+            return Response({"message":"noticeboard doesn't exist"}, status=400)
         serializer = NoticeboardSerializer(noticeboard, many=True)
         
         community = CommunityModel.objects.get(id=pk)
@@ -54,7 +60,8 @@ class NoticeboardDetail(APIView):
 class NoticeboardObject(APIView):
     def get(self, request, pk):
         noticeboard = Noticeboard.objects.filter(id=pk)
+        if not noticeboard:
+            return Response({"message":"noticeboard doesn't exist"}, status=400)
         serializer = NoticeboardSerializer(noticeboard, many=True)
-
         return Response(serializer.data, status=200)
 
