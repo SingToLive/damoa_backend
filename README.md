@@ -127,11 +127,7 @@
 ## ⚙ [ERD](https://www.erdcloud.com/d/EL9ztjydoLhqhysPe)
 ![186103025-070baeb8-083d-4394-9153-207b4751c940](https://user-images.githubusercontent.com/90381057/186792091-80933248-481a-402a-9622-14f12739912b.png)
 
-## 🚀 **API 설계**
-[article](https://documenter.getpostman.com/view/16204656/VUquLFrn#intro)  
-[community](https://documenter.getpostman.com/view/16204656/VUquLFw9)  
-[noticeboard](https://documenter.getpostman.com/view/16204656/VUquLajN)  
-[user](https://documenter.getpostman.com/view/16204656/VUquLajQ)  
+## 🚀 **[API 설계](https://documenter.getpostman.com/view/16204656/VUqypEbL)**
 
 ## 🗺 Layout
 ![Group 26](https://user-images.githubusercontent.com/90381057/186547234-04a9537b-2f48-4a3d-903b-bed3f7b3ba8d.png)
